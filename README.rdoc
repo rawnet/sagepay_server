@@ -36,7 +36,7 @@ The resourceful routes that apply to these controllers are;
 
     resources :payments, :only => [:index, :new, :create, :edit, :update, :show], do
         resources :sagepay_transactions, :only => [:create]
-  	    match 'pay' => 'sagepay_transactions#pay', :as => 'sagepay_pay'
+        match 'pay' => 'sagepay_transactions#pay', :as => 'sagepay_pay'
     end
     resource :sagepay_notifications, :only => [:create]
 
