@@ -9,6 +9,8 @@ Then run
 == Generators
 
 Generators are provided to create the basic resource and controller structure. 
+Please note that these are not intended as 'generate and forget' generators. 
+You should generate, then work out what's going on and integrate into your app.
 
 === Models
 
@@ -34,7 +36,7 @@ This will create three controllers
 
 The resourceful routes that apply to these controllers are;
 
-    resources :payments, :only => [:index, :new, :create, :edit, :update, :show], do
+    resources :payments, :only => [:index, :new, :create, :edit, :update, :show] do
         resources :sagepay_transactions, :only => [:create]
         match 'pay' => 'sagepay_transactions#pay', :as => 'sagepay_pay'
     end
