@@ -1,3 +1,43 @@
-= SagepayServer
+= Sagepay Server Abstraction Gem
 
-This project rocks and uses MIT-LICENSE.
+In your gemfile:
+    gem 'sagepay_server', :git => 'git@github.com:rawnet/sagepay_server.git'
+
+Then run
+    bundle install
+
+== Generators
+
+Generators are provided to create the basic resource and controller structure. 
+
+=== Models
+
+    rails g sagepay_server:models
+
+This will create three models, and their respective migrations
+
+    Payment
+    PaymentAddress
+    SagepayTransactions
+
+Each Payment has_one 'billing' PaymentAddress, has_one 'delivery' PaymentAddress, and has_many SagepayTransactions
+
+=== Controllers
+
+    rails g sagepay_server:controllers
+
+This will create three controllers
+
+    PaymentsController
+    SagepayTransactionsController
+    SagepayNotificationsController
+
+The resourceful routes that apply to these controllers are;
+
+    resources :payments, :only => [:index, :new, :create, :edit, :update, :show], do
+        resources :sagepay_transactions, :only => [:create]
+  	    match 'pay' => 'sagepay_transactions#pay', :as => 'sagepay_pay'
+    end
+    resource :sagepay_notifications, :only => [:create]
+
+Please note that the routes ARE NOT generated for you
